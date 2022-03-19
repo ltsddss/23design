@@ -81,7 +81,19 @@ public class main {
 //        System.out.println(user1.hashCode()+"ccc"+user.hashCode());
 
         /**
-         * 8.但是这样还是有问题，在对象中我们使用了锁来锁住了class，但是
+         * 8.但是这样还是有问题，在对象中我们使用了锁来锁住了class，但是我们可以不通过获得class来创建对象
+         *
+         */
+        //通过字节码文件获取构造器
+        Constructor<User> declaredConstructor = User.class.getDeclaredConstructor(null);
+        //setAccessible可以临时改变私有变量的值，这样就可以将私有的构造器改为公共
+        declaredConstructor.setAccessible(true);
+        User user1 = declaredConstructor.newInstance();
+        User user2 = declaredConstructor.newInstance();
+        System.out.println(user1.hashCode()+"ccc"+user2.hashCode());
+
+        /**
+         * 9.解决方式是设置密钥，判断对象是否单一
          */
     }
 }
